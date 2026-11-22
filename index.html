@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Foundora: an AI-powered startup companion for first-time entrepreneurs in the UAE. Plan. Validate. Launch.">
+<title>Foundora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
+<style>
+/* Layout: split hero (copy left, navy summary card right), then a two-up demo (onboarding + roadmap) with a wide assistant panel, then plain sections of the business plan. */
+:root{
+  --bg:#F5F4F0; --surface:#FFFFFF; --soft:#ECEAE4; --line:#DEDBD3;
+  --navy:#10263F; --ink:#1B2B3C; --muted:#5D6B78;
+  --teal:#14707A; --teal-soft:#DDEEEC; --coral:#E9805F; --coral-soft:#F9E2D8;
+  --on-teal:#FFFFFF; --good:#2F8F6A; --good-soft:#DDF1E7;
+  --display:"Outfit", "Segoe UI", system-ui, sans-serif;
+  --body:"DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --r:8px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D1A28; --surface:#14263A; --soft:#1A2F45; --line:#28405A;
+  --navy:#EAF1F7; --ink:#DCE5EE; --muted:#9AAABA;
+  --teal:#4FB3B8; --teal-soft:#173F48; --coral:#F28F77; --coral-soft:#3D2A29;
+  --on-teal:#0D1A28; --good:#5CC79A; --good-soft:#173A31; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0D1A28; --surface:#14263A; --soft:#1A2F45; --line:#28405A;
+  --navy:#EAF1F7; --ink:#DCE5EE; --muted:#9AAABA;
+  --teal:#4FB3B8; --teal-soft:#173F48; --coral:#F28F77; --coral-soft:#3D2A29;
+  --on-teal:#0D1A28; --good:#5CC79A; --good-soft:#173A31; color-scheme:dark }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1120px;margin-inline:auto}
+h1,h2,h3,h4{font-family:var(--display);color:var(--navy);line-height:1.2;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.6rem,3.2vw,2.2rem);font-weight:800;letter-spacing:-.01em}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+a{color:var(--teal)}
+:focus-visible{outline:3px solid var(--coral);outline-offset:2px;border-radius:6px}
+.eyebrow{font-family:var(--display);font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--coral)}
+.lead{color:var(--muted);max-width:65ch;font-size:1.05rem}
+.note{color:var(--muted);font-size:.85rem;max-width:70ch}
+.num{font-variant-numeric:tabular-nums}
+
+/* Header */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-inline:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));padding-inline:max(16px, env(safe-area-inset-left, 0px))}
+header.top .wrap{display:flex;align-items:center;gap:1rem;padding-block:.7rem}
+.brand{display:flex;align-items:center;gap:.5rem;font-family:var(--display);font-weight:800;font-size:1.3rem;color:var(--navy);text-decoration:none}
+.brand svg{width:30px;height:30px}
+nav.links{margin-left:auto;display:flex;gap:1.1rem;flex-wrap:wrap}
+nav.links a{color:var(--ink);text-decoration:none;font-size:.9rem;font-weight:500}
+nav.links a:hover{color:var(--teal)}
+.btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--teal);color:var(--on-teal);border:0;border-radius:10px;padding:.7rem 1.2rem;font-family:var(--display);font-weight:700;font-size:.95rem;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--teal);border:1.5px solid var(--teal)}
+@media (max-width:820px){nav.links{display:none}}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:center;padding-block:3.5rem 2.5rem}
+@media (max-width:860px){.hero{grid-template-columns:minmax(0,1fr)}}
+.hero h1{font-size:clamp(2.6rem,6.4vw,4.6rem);font-weight:800;letter-spacing:-.03em;line-height:1.02;margin-top:.7rem}
+.hero h1 span{color:var(--coral)}
+.hero .sub{font-family:var(--display);font-size:clamp(1.1rem,2.2vw,1.35rem);font-weight:500;color:var(--navy);margin-top:1rem;max-width:34ch}
+.hero .msg{color:var(--muted);margin-top:.9rem;max-width:56ch}
+.hero .ctas{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.5rem}
+.feat{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.6rem;padding:0;list-style:none}
+.feat li{display:flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:500;color:var(--navy);border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:.3rem .75rem .3rem .4rem}
+.feat svg{width:20px;height:20px;color:var(--teal)}
+.sumcard{background:#10263F;color:#E7EEF4;border-radius:18px;padding:1.6rem;position:relative;overflow:hidden}
+.sumcard::after{content:"";position:absolute;right:-60px;bottom:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,#E9805F55,transparent 70%)}
+.sumcard .top{display:flex;align-items:center;gap:.6rem;font-family:var(--display);font-weight:700;font-size:1.25rem;color:#fff}
+.sumcard .top svg{width:40px;height:40px}
+.sumcard dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:#2A4360;border-radius:12px;overflow:hidden;margin:1.2rem 0 0;position:relative;z-index:1}
+.sumcard dl div{background:#13304D;padding:.9rem 1rem}
+.sumcard dt{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#9FB4C8}
+.sumcard dd{margin:.15rem 0 0;font-family:var(--display);font-weight:700;font-size:1.35rem;color:#fff;font-variant-numeric:tabular-nums}
+.sumcard dd small{font-size:.8rem;font-weight:500;color:#9FB4C8}
+.sumcard p{font-size:.88rem;color:#B9C8D6;margin-top:1rem;position:relative;z-index:1}
+
+/* Browser window panels */
+.demo-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem;padding-top:1rem;border-top:1px solid var(--line)}
+.demo-head p{color:var(--muted);font-size:.92rem;max-width:52ch}
+.panels{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:1.1rem;align-items:start;padding-bottom:2.5rem}
+.panels #assistant{grid-column:1/-1}
+@media (max-width:900px){.panels{grid-template-columns:minmax(0,1fr)}}
+.lbl{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--display);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.6rem}
+.lbl::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--coral)}
+#start-card{background:var(--teal-soft);border-color:transparent}
+.as-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:1.4rem;align-items:start}
+@media (max-width:760px){.as-grid{grid-template-columns:minmax(0,1fr)}}
+.as-grid .evid{margin-top:0}
+.win{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;scroll-margin-top:80px}
+.win .bar{display:flex;align-items:center;gap:.4rem;padding:.55rem .8rem;background:var(--soft);border-bottom:1px solid var(--line)}
+.win .bar i{width:10px;height:10px;border-radius:50%;display:block}
+.win .bar i:nth-child(1){background:#EE6A5F}.win .bar i:nth-child(2){background:#F5BE4F}.win .bar i:nth-child(3){background:#62C554}
+.win .bar span{margin-inline:auto;font-size:.75rem;color:var(--muted)}
+.win .in{padding:clamp(1.1rem,2.5vw,1.6rem)}
+.win h3.big{font-size:1.45rem;font-weight:800}
+.win .hint{color:var(--muted);font-size:.88rem;margin:.3rem 0 1rem}
+
+/* Onboarding form */
+form.onb{display:grid;gap:.7rem}
+.field{display:grid;grid-template-columns:28px minmax(0,1fr);gap:.6rem;align-items:start;border:1px solid var(--line);border-radius:10px;padding:.6rem .7rem;background:var(--surface)}
+.field svg{width:22px;height:22px;color:var(--navy);margin-top:.15rem}
+.field label{font-size:.82rem;font-weight:600;color:var(--navy);display:block}
+.field input,.field select{width:100%;border:0;background:transparent;font:inherit;font-size:.9rem;color:var(--ink);padding:.15rem 0}
+.field input::placeholder{color:var(--muted)}
+.field input:focus,.field select:focus{outline:none}
+.field:focus-within{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-soft)}
+form.onb .btn{justify-content:center;margin-top:.3rem}
+
+/* Roadmap */
+.stepper{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin:.4rem 0 1.2rem}
+.stepper .fill{display:none}
+.stepper button{display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;background:none;border:0;padding:0;cursor:default;font:inherit;font-size:.75rem;color:var(--muted)}
+.stepper .dot{display:block;width:100%;height:6px;border-radius:3px;background:var(--line)}
+.stepper .dot svg{display:none}
+.stepper .done .dot{background:var(--teal)}
+.stepper .done{color:var(--navy);font-weight:600}
+.stepper .cur .dot{background:var(--coral)}
+.stepper .cur{color:var(--coral);font-weight:600}
+.tasks{display:grid;gap:.55rem}
+.task{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:.7rem;align-items:center;border:1px solid var(--line);border-radius:8px;padding:.6rem .7rem;background:var(--surface);cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
+.task:hover{border-color:var(--teal)}
+.task .ic{width:40px;height:40px;border-radius:8px;display:grid;place-items:center;font-size:1.1rem}
+.task b{font-family:var(--display);font-size:.92rem;color:var(--navy);display:block}
+.task small{color:var(--muted);font-size:.8rem}
+.pill{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:999px;white-space:nowrap}
+.pill.complete{background:var(--good-soft);color:var(--good)}
+.pill.progress{background:var(--teal);color:var(--on-teal)}
+.pill.pending{background:var(--soft);color:var(--muted)}
+.rm-for{font-size:.85rem;color:var(--teal);font-weight:600;margin-top:-.6rem;margin-bottom:.8rem}
+
+/* Assistant */
+.chat{display:grid;gap:.6rem;max-height:300px;overflow-y:auto;padding-right:.2rem}
+.b{max-width:85%;padding:.6rem .8rem;border-radius:14px;font-size:.88rem}
+.b.me{justify-self:end;background:var(--teal-soft);color:var(--ink);border-bottom-right-radius:4px}
+.b.ai{justify-self:start;background:var(--soft);border-bottom-left-radius:4px}
+.evid{margin-top:.9rem;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.evid h4{font-size:.85rem;padding:.5rem .7rem;border-bottom:1px solid var(--line)}
+.evid .cols{display:grid;grid-template-columns:1fr 1fr}
+.evid .cols div{padding:.55rem .7rem;font-size:.8rem}
+.evid .cols div:first-child{background:var(--coral-soft)}
+.evid .cols div:last-child{background:var(--teal-soft)}
+.evid strong{display:block;color:var(--navy);font-size:.8rem}
+.next{margin-top:.6rem;background:var(--teal-soft);border-radius:12px;padding:.6rem .8rem;font-size:.82rem;display:flex;gap:.6rem;align-items:flex-start}
+.next b{color:var(--navy)}
+form.ask{display:flex;gap:.5rem;margin-top:.7rem}
+form.ask input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:.6rem .7rem;font:inherit;font-size:.88rem;background:var(--surface);color:var(--ink)}
+form.ask button{flex:none;width:44px;border-radius:10px;border:0;background:var(--teal);color:var(--on-teal);cursor:pointer;display:grid;place-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem}
+.chips button{font:inherit;font-size:.74rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:.2rem .6rem;cursor:pointer}
+.chips button:hover{border-color:var(--teal);color:var(--teal)}
+
+/* Feature strip */
+.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border-block:1px solid var(--line);margin-block:2rem 1rem}
+.strip div{display:flex;align-items:center;gap:.7rem;padding:1.1rem .9rem;font-family:var(--display);font-weight:600;color:var(--navy);font-size:.95rem;line-height:1.25}
+.strip div+div{border-left:1px solid var(--line)}
+.strip svg{width:34px;height:34px;flex:none;color:var(--navy)}
+@media (max-width:900px){.strip{grid-template-columns:repeat(2,minmax(0,1fr))}.strip div+div{border-left:0}.strip div{border-bottom:1px solid var(--line)}}
+@media (max-width:460px){.strip{grid-template-columns:minmax(0,1fr)}}
+
+/* Sections */
+section.s{padding-block:3.2rem;border-top:1px solid var(--line);scroll-margin-top:60px}
+section.s>.wrap>header{display:grid;gap:.5rem;margin-bottom:1.8rem}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem}
+@media (max-width:820px){.grid2,.grid3{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1.2rem;min-width:0}
+.card p{color:var(--muted);font-size:.93rem;margin-top:.4rem}
+.card .k{font-family:var(--display);font-weight:800;color:var(--coral);font-size:.85rem}
+ul.clean{margin:.6rem 0 0;padding-left:1.1rem;color:var(--muted);font-size:.93rem}
+ul.clean li+li{margin-top:.25rem}
+
+/* Journey */
+.journey{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.5rem;counter-reset:j}
+.journey li{list-style:none;counter-increment:j;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.8rem .7rem;font-size:.85rem;font-weight:600;color:var(--navy);font-family:var(--display);line-height:1.3}
+.journey li::before{content:counter(j);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--coral-soft);color:var(--coral);font-size:.8rem;margin-bottom:.5rem}
+.journey{padding:0;margin:0}
+@media (max-width:900px){.journey{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Conversion funnel */
+.funnel{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.5rem;padding:0;margin:0}
+.funnel li{list-style:none;background:var(--teal-soft);border-radius:12px;padding:.9rem .8rem;font-size:.85rem;color:var(--ink)}
+.funnel li b{display:block;font-family:var(--display);color:var(--navy);margin-bottom:.25rem}
+@media (max-width:900px){.funnel{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{font-weight:700;color:var(--navy);background:var(--soft)}
+tr.us td{background:var(--coral-soft);font-weight:600;color:var(--navy)}
+.lvl{font-size:.75rem;font-weight:600;padding:.15rem .5rem;border-radius:999px;background:var(--soft);white-space:nowrap}
+.lvl.h{background:var(--teal);color:var(--on-teal)}
+
+/* Pricing */
+.prices{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.8rem}
+@media (max-width:900px){.prices{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){.prices{grid-template-columns:minmax(0,1fr)}}
+.price{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1rem;display:grid;gap:.3rem;align-content:start}
+.price.feat{border:2px solid var(--teal)}
+.price .n{font-family:var(--display);font-weight:700;color:var(--navy);font-size:.95rem}
+.price .p{font-family:var(--display);font-weight:800;font-size:1.4rem;color:var(--teal)}
+.price .u{font-size:.8rem;color:var(--muted)}
+
+/* Budget bars */
+.bars{display:grid;gap:.55rem}
+.barrow{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,2fr) 70px;gap:.7rem;align-items:center;font-size:.86rem}
+.barrow .t{height:12px;background:var(--soft);border-radius:6px;overflow:hidden}
+.barrow .t i{display:block;height:100%;background:var(--teal);border-radius:6px}
+.barrow.c .t i{background:var(--coral)}
+.barrow .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;color:var(--navy)}
+.barrow.tot{border-top:1px solid var(--line);padding-top:.5rem;font-weight:700;color:var(--navy)}
+@media (max-width:520px){.barrow{grid-template-columns:minmax(0,1fr) 70px}.barrow .t{grid-column:1/-1;grid-row:2}}
+
+/* Break-even calculator */
+.calc{display:grid;gap:1rem}
+.calc input[type=range]{width:100%;accent-color:var(--teal)}
+.calc .out{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.calc .out div{background:var(--soft);border-radius:10px;padding:.6rem .8rem}
+.calc .out small{display:block;color:var(--muted);font-size:.76rem}
+.calc .out b{font-family:var(--display);font-size:1.15rem;color:var(--navy);font-variant-numeric:tabular-nums}
+.calc .verdict{font-weight:600;font-size:.92rem}
+.calc .verdict.pos{color:var(--good)}.calc .verdict.neg{color:var(--coral)}
+.formula{font-family:var(--display);background:var(--teal-soft);border-radius:10px;padding:.8rem 1rem;color:var(--navy);font-weight:600;font-variant-numeric:tabular-nums}
+
+/* Timeline */
+.years{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7rem;padding:0;margin:0}
+.years li{list-style:none;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--teal);border-radius:12px;padding:1rem}
+.years li:first-child{border-top-color:var(--coral)}
+.years .y{font-family:var(--display);font-weight:800;color:var(--navy)}
+.years p{font-size:.86rem;color:var(--muted);margin-top:.3rem}
+.years .m{font-size:.8rem;font-weight:600;color:var(--teal);margin-top:.5rem}
+@media (max-width:900px){.years{grid-template-columns:minmax(0,1fr)}}
+
+/* Team */
+.team{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.8rem}
+@media (max-width:900px){.team{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){.team{grid-template-columns:minmax(0,1fr)}}
+.member{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1rem;text-align:center}
+.member .av{width:54px;height:54px;border-radius:50%;margin:0 auto .5rem;display:grid;place-items:center;font-family:var(--display);font-weight:800;color:var(--on-teal);background:var(--teal)}
+.member:nth-child(even) .av{background:var(--coral);color:#fff}
+.member b{font-family:var(--display);color:var(--navy);display:block}
+.member small{color:var(--muted);font-size:.8rem;display:block}
+.member p{font-size:.82rem;margin-top:.4rem}
+
+/* Access / QR */
+.access{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2rem;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(1.2rem,3vw,2.2rem)}
+@media (max-width:760px){.access{grid-template-columns:minmax(0,1fr)}}
+.access ol{margin:.8rem 0 0;padding-left:1.2rem;display:grid;gap:.45rem}
+.qrbox{background:#fff;border-radius:16px;padding:14px;border:1px solid var(--line);justify-self:center;text-align:center}
+.qrbox img{width:220px;height:220px;display:block;image-rendering:pixelated}
+.qrbox small{display:block;color:#10263F;font-size:.78rem;font-weight:600;margin-top:.3rem;letter-spacing:.1em;text-transform:uppercase}
+.linkrow{display:flex;gap:.5rem;align-items:center;margin-top:1rem;flex-wrap:wrap}
+.linkrow code{background:var(--soft);padding:.5rem .7rem;border-radius:8px;font-size:.85rem;word-break:break-all;color:var(--navy);user-select:all;min-width:0}
+
+footer{padding-block:2.5rem;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+footer .tagline{text-align:center;font-family:var(--display);letter-spacing:.35em;font-weight:600;color:var(--navy);margin-bottom:1.8rem;font-size:.85rem}
+.refs{font-size:.8rem;padding-left:1.1rem;display:grid;gap:.35rem;margin:.6rem 0 0}
+.refs a{word-break:break-all}
+details{border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;background:var(--surface)}
+details+details{margin-top:.6rem}
+summary{cursor:pointer;font-family:var(--display);font-weight:700;color:var(--navy)}
+
+html{color-scheme:light} body{margin:0} [hidden]{display:none!important} img{max-width:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+</style>
+</head>
+<body>
+
+
+<!-- shared compass mark -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 100 100">
+      <path d="M50 2 L58 42 L50 50 Z" fill="#10263F"/><path d="M50 2 L42 42 L50 50 Z" fill="#1E6B73"/>
+      <path d="M98 50 L58 58 L50 50 Z" fill="#10263F"/><path d="M98 50 L58 42 L50 50 Z" fill="#1E6B73"/>
+      <path d="M50 98 L42 58 L50 50 Z" fill="#1E6B73"/><path d="M50 98 L58 58 L50 50 Z" fill="#10263F"/>
+      <path d="M2 50 L42 42 L50 50 Z" fill="#1E6B73"/><path d="M2 50 L42 58 L50 50 Z" fill="#10263F"/>
+      <path d="M50 50 L72 28 L60 46 Z" fill="#EE7A5F"/><path d="M50 50 L72 28 L54 40 Z" fill="#F4A48F"/>
+      <path d="M50 50 L28 72 L40 54 Z" fill="#EE7A5F"/><path d="M50 50 L28 72 L46 60 Z" fill="#F4A48F"/>
+      <path d="M50 50 L28 28 L46 40 Z" fill="#EE7A5F"/><path d="M50 50 L72 72 L54 60 Z" fill="#EE7A5F"/>
+      <circle cx="50" cy="50" r="4" fill="#fff"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><svg aria-hidden="true"><use href="#mark"/></svg>Foundora</a>
+    <nav class="links" aria-label="Sections">
+      <a href="#start">Get started</a>
+      <a href="#why">Why Foundora</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#numbers">Numbers</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#team">Team</a>
+      <a href="#access">Share this site</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <span class="eyebrow">AI startup companion · UAE</span>
+      <h1>Plan. Validate. <span>Launch.</span></h1>
+      <p class="sub">Turn your business idea into a startup plan you can act on, step by step.</p>
+      <p class="msg">Thinking about a business idea but don't know where to begin? Foundora brings an AI business assistant, a personalised startup roadmap, learning resources and customer validation tools together in one beginner-friendly place, built for first-time founders in the UAE.</p>
+      <div class="ctas">
+        <a class="btn" href="#start">Build my roadmap →</a>
+        <a class="btn ghost" href="#access">Scan or share</a>
+      </div>
+      <ul class="feat">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>AI-powered guidance</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>Personalised roadmap</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg>Expert resources</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 21h18M6 21V14M10 21V10M14 21v-6M18 21V7"/></svg>Validation tools</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 15l-3-3a22 22 0 0 1 2-4A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2z"/><path d="M9 12H4s.5-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.5 4-2c1.1-1.6 0-5 0-5"/></svg>Launch with confidence</li>
+      </ul>
+    </div>
+    <aside class="sumcard" aria-label="Foundora at a glance">
+      <div class="top"><svg aria-hidden="true"><use href="#mark"/></svg>Foundora at a glance</div>
+      <dl>
+        <div><dt>Basic account</dt><dd>Free</dd></div>
+        <div><dt>Premium</dt><dd>AED 59 <small>/ month</small></dd></div>
+        <div><dt>Roadmap phases</dt><dd>5</dd></div>
+        <div><dt>For founders aged</dt><dd>18–35</dd></div>
+      </dl>
+      <p>From idea to impact: plan, validate, prepare, launch and grow, with an AI assistant and specialists when you need them.</p>
+    </aside>
+  </section>
+
+  <!-- Three prototype panels -->
+  <div class="demo-head" id="start">
+    <div><span class="eyebrow">Try the prototype</span><h2 style="margin-top:.3rem">See how Foundora guides you</h2></div>
+    <p>Fill in the form to personalise the roadmap, then ask the assistant a question. Answers in this demo are simulated.</p>
+  </div>
+  <div class="panels">
+    <article class="win" id="start-card" aria-labelledby="onb-h">
+      <div class="in">
+        <span class="lbl">Step 1 · Onboarding</span>
+        <h3 class="big" id="onb-h">Turn your idea into a clear next step</h3>
+        <p class="hint">Answer a few quick questions to get your personalised startup roadmap.</p>
+        <form class="onb" id="onb">
+          <div class="field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg>
+            <div><label for="idea">Your business idea</label><input id="idea" placeholder="e.g. A sustainable fashion brand…" value="A sustainable fashion brand"></div>
+          </div>
+          <div class="field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.2c2.8.3 5 2.6 5 5.8"/></svg>
+            <div><label for="cust">Target customer</label><input id="cust" placeholder="e.g. University students" value="University students"></div>
+          </div>
+          <div class="field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+            <div><label for="emirate">UAE Emirate</label>
+              <select id="emirate"><option>Dubai</option><option>Abu Dhabi</option><option>Sharjah</option><option>Ajman</option><option>Ras Al Khaimah</option><option>Fujairah</option><option>Umm Al Quwain</option></select></div>
+          </div>
+          <div class="field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 6V4h10v2"/><circle cx="16.5" cy="14.5" r="1.2"/></svg>
+            <div><label for="budget">Budget range (AED)</label>
+              <select id="budget"><option>Under 10,000</option><option selected>10,000 – 50,000</option><option>50,000 – 100,000</option><option>Over 100,000</option></select></div>
+          </div>
+          <div class="field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <div><label for="time">Available time</label>
+              <select id="time"><option>Less than 3 months</option><option>3 – 6 months</option><option>6 – 12 months</option><option>More than a year</option></select></div>
+          </div>
+          <button class="btn" type="submit">Get Started →</button>
+        </form>
+      </div>
+    </article>
+
+    <article class="win" id="roadmap" aria-labelledby="rm-h">
+      <div class="in">
+        <span class="lbl">Step 2 · Your dashboard</span>
+        <h3 class="big" id="rm-h">Your startup roadmap</h3>
+        <p class="hint">A personalised plan to validate and grow your idea. Tap a task to update its status.</p>
+        <p class="rm-for" id="rmFor">For: A sustainable fashion brand · University students · Dubai</p>
+        <div class="stepper" id="stepper"><span class="fill" id="fill"></span></div>
+        <div class="tasks" id="tasks"></div>
+      </div>
+    </article>
+
+    <article class="win" id="assistant" aria-labelledby="as-h">
+      <div class="in">
+        <span class="lbl">Step 3 · AI assistant</span>
+        <h3 class="big" id="as-h">Let's validate your idea</h3>
+        <p class="hint">Ask questions, explore insights and get actionable advice. (Demo: answers are simulated.)</p>
+        <div class="as-grid"><div>
+        <div class="chat" id="chat" aria-live="polite">
+          <div class="b me">Is there demand for a sustainable fashion brand in the UAE?</div>
+          <div class="b ai">Great question! Sustainable fashion is a growing interest in the UAE, especially among Gen Z and millennials. But interest is an assumption until customers confirm it. Would you like some next steps to collect real evidence?</div>
+        </div>
+        <form class="ask" id="ask">
+          <label for="q" class="sr" hidden>Ask a follow-up question</label>
+          <input id="q" placeholder="Ask a follow-up question…" autocomplete="off">
+          <button type="submit" aria-label="Send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+        </form>
+        <div class="chips" id="chips">
+          <button type="button">How much will it cost to start?</button>
+          <button type="button">Do I need a trade licence?</button>
+          <button type="button">How should I price it?</button>
+          <button type="button">How do I interview customers?</button>
+        </div>
+        </div><div>
+        <div class="evid">
+          <h4>📊 Evidence Tracker</h4>
+          <div class="cols">
+            <div><strong>Assumption</strong>High demand for sustainable fashion</div>
+            <div><strong>Customer evidence</strong>Growing interest in eco-friendly brands in the UAE</div>
+          </div>
+        </div>
+        <div class="next"><span aria-hidden="true">✅</span><div><b>Next step:</b> Interview at least 5 potential customers to validate your product concept.</div></div>
+        </div></div>
+      </div>
+    </article>
+  </div>
+
+</div>
+
+<!-- About -->
+<section class="s" id="about"><div class="wrap">
+  <header><span class="eyebrow">What Foundora is</span><h2>A guided path from idea to launch</h2>
+  <p class="lead">Foundora is a proposed online business incubation platform for first-time entrepreneurs in the UAE. It helps people turn business concepts into structured startup strategies, so they can tackle common problems like limited business knowledge, financial planning, confidence and access to professional advice.</p></header>
+  <div class="grid2">
+    <div class="card"><h3>How it works</h3><p>Instead of another generic chatbot, Foundora offers a guided entrepreneurship experience. You enter your concept, experience, budget, location and goals. The platform then suggests activities that fit your situation.</p>
+      <ul class="clean"><li>AI business assistant</li><li>Custom startup roadmaps</li><li>Educational articles and videos</li><li>Research templates and business plan generators</li><li>Financial planning resources and pitch preparation tools</li><li>Help from relevant specialists</li></ul></div>
+    <div class="card"><h3>Who it's for</h3><p>UAE residents aged 18 to 35: university students, recent graduates and young professionals who want to open their first business.</p>
+      <p style="margin-top:.8rem"><span class="k">PERSONA</span><br>A 22-year-old student at the University of Dubai planning a graphic design business, who needs advice on pricing, market research and business development.</p></div>
+  </div>
+  <h3 style="margin:2rem 0 .9rem">The seven-step customer journey</h3>
+  <ol class="journey"><li>Develop the idea</li><li>Identify customers</li><li>Validate the market</li><li>Build the business model</li><li>Plan finances</li><li>Prepare to launch</li><li>Plan for growth</li></ol>
+</div></section>
+
+<!-- Why -->
+<section class="s" id="why"><div class="wrap">
+  <header><span class="eyebrow">Unique selling proposition</span><h2>Why Foundora</h2>
+  <p class="lead">AI-assisted business advice, startup roadmaps, practical education and customer validation, combined in one beginner-oriented platform. The innovation is not AI on its own. It is AI joined with systematic entrepreneurship processes, UAE-based resources and evidence-based decisions.</p></header>
+  <div class="grid3">
+    <div class="card"><h3>Personalised guidance</h3><p>Information is structured around each user's business concept, resources, experience and stage, instead of leaving them to interpret general content alone.</p></div>
+    <div class="card"><h3>UAE business context</h3><p>Local examples, business planning and links to sources of help. Initial advice on licensing, markets and business formation, with referrals to official authorities or qualified professionals where needed.</p></div>
+    <div class="card"><h3>Structured roadmaps</h3><p>Business development broken into manageable tasks, so beginners see how customers, demand, financial estimates and a launch plan connect.</p></div>
+    <div class="card"><h3>Customer validation tools</h3><p>Templates, survey guidelines, testing plans and evidence tracking help users check whether they meet real customer needs before investing heavily.</p></div>
+    <div class="card"><h3>Specialist support</h3><p>When users need more advanced help, they can consult experts, combining AI guidance with professional skills.</p></div>
+    <div class="card"><h3>Evidence over assumptions</h3><p>"Customers will buy this" is an assumption. Interview responses, pilot participation and actual purchases are evidence. Foundora keeps the two apart.</p></div>
+  </div>
+  <h3 style="margin:2rem 0 .9rem">Common problems Foundora solves</h3>
+  <div class="grid2">
+    <ul class="clean card" style="margin:0;padding-left:2.2rem"><li>Creating and testing business concepts</li><li>Finding market opportunities and target customers</li><li>Preparing startup budgets and business plans</li></ul>
+    <ul class="clean card" style="margin:0;padding-left:2.2rem"><li>Accessing professional advice and helpful materials</li><li>Following a structured process towards launching a business</li></ul>
+  </div>
+</div></section>
+
+<!-- Market -->
+<section class="s" id="market"><div class="wrap">
+  <header><span class="eyebrow">Customers &amp; competitors</span><h2>Where Foundora fits</h2>
+  <p class="lead">Foundora competes with AI assistants, business planning tools and business incubators. Its position: a user-friendly, UAE-centric resource with personalised advice and organised business development.</p></header>
+  <div class="grid2">
+    <div>
+      <h3 style="margin-bottom:.7rem">Target customer segmentation</h3>
+      <div class="tbl"><table>
+        <tr><th>Segment</th><th>Characteristics</th></tr>
+        <tr><td>Geographic</td><td>UAE, initially focusing on Dubai</td></tr>
+        <tr><td>Demographic</td><td>Students, graduates and professionals aged 18 to 35</td></tr>
+        <tr><td>Psychographic</td><td>Ambitious, innovative, interested in entrepreneurship</td></tr>
+        <tr><td>Behavioural</td><td>Looking for startup and business planning advice</td></tr>
+      </table></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:.7rem">Competitive positioning</h3>
+      <div class="tbl"><table>
+        <tr><th>Platform</th><th>UAE relevance</th><th>Guided tasks</th></tr>
+        <tr><td>General AI assistants</td><td><span class="lvl">Low–Medium</span></td><td><span class="lvl">Medium</span></td></tr>
+        <tr><td>LivePlan</td><td><span class="lvl">Medium</span></td><td><span class="lvl h">High</span></td></tr>
+        <tr><td>Educational resources</td><td><span class="lvl">Variable</span></td><td><span class="lvl">Low–Medium</span></td></tr>
+        <tr><td>Startup support organisations</td><td><span class="lvl h">High</span></td><td><span class="lvl h">High</span> for selected programs</td></tr>
+        <tr class="us"><td>Foundora (proposed)</td><td><span class="lvl h">High</span></td><td><span class="lvl h">High</span></td></tr>
+      </table></div>
+      <p class="note" style="margin-top:.5rem">Positioning reflects preliminary assumptions, not verified market research.</p>
+    </div>
+  </div>
+  <h3 style="margin:2rem 0 .7rem">Competitor analysis</h3>
+  <div class="tbl"><table>
+    <tr><th>Competitor</th><th>Main strength</th><th>Foundora's proposed advantage</th></tr>
+    <tr><td>ChatGPT</td><td>Flexible AI assistance</td><td>Structured startup guidance</td></tr>
+    <tr><td>Claude</td><td>Writing and analytical support</td><td>Step-by-step business development</td></tr>
+    <tr><td>LivePlan</td><td>Business planning tools</td><td>Integrated idea validation</td></tr>
+    <tr><td>Dubai Founders HQ</td><td>Mentorship and startup networks</td><td>Accessible digital guidance</td></tr>
+    <tr><td>Dtec</td><td>Startup infrastructure and support</td><td>Focus on beginner entrepreneurs</td></tr>
+    <tr><td>Hub71</td><td>Acceleration and ecosystem access</td><td>Early-stage preparation tools</td></tr>
+  </table></div>
+  <p class="note" style="margin-top:.6rem">Existing UAE support organisations offer good mentoring, networking and startup programs. Foundora differs by combining AI support, hands-on business planning and guided task execution on one platform.</p>
+</div></section>
+
+<!-- Pricing -->
+<section class="s" id="pricing"><div class="wrap">
+  <header><span class="eyebrow">Freemium model</span><h2>Start free, upgrade when you need more</h2>
+  <p class="lead">Basic AI advice and startup roadmaps are free. Premium adds advanced planning, downloadable templates and customised support. Prices will be tested with customer feedback before launch.</p></header>
+  <div class="prices">
+    <div class="price"><span class="n">Basic account</span><span class="p">Free</span><span class="u">AI advice and startup roadmap</span></div>
+    <div class="price feat"><span class="n">Premium</span><span class="p num">AED 59</span><span class="u">per month · advanced tools and templates</span></div>
+    <div class="price"><span class="n">Specialist consultation</span><span class="p num">AED 150</span><span class="u">per session</span></div>
+    <div class="price"><span class="n">Business plan review</span><span class="p num">AED 299</span><span class="u">per advanced review package</span></div>
+    <div class="price"><span class="n">Institutional access</span><span class="p" style="font-size:1.05rem">Negotiated</span><span class="u">annual contract for universities and partners</span></div>
+  </div>
+
+  <h3 style="margin:2.2rem 0 .9rem">How people discover and join Foundora</h3>
+  <ol class="funnel">
+    <li><b>1. Awareness</b>Discover Foundora through social media or university events.</li>
+    <li><b>2. Website visit</b>Visit the platform and explore its features.</li>
+    <li><b>3. Registration</b>Create a free account.</li>
+    <li><b>4. AI roadmap</b>Enter a business idea and receive a personalised plan.</li>
+    <li><b>5. Planning &amp; validation</b>Use tools for market research, budgeting and idea validation.</li>
+    <li><b>6. Premium</b>Upgrade for advanced tools, templates and expert support.</li>
+  </ol>
+  <div class="grid3" style="margin-top:1.2rem">
+    <div class="card"><h3>Content marketing</h3><p>Educational videos, startup tips and practical guides on business planning, budgeting, customer identification and idea validation.</p></div>
+    <div class="card"><h3>Social media</h3><p>Instagram and TikTok short videos and demos for students and young entrepreneurs. LinkedIn for professionals and potential partners.</p></div>
+    <div class="card"><h3>University partnerships</h3><p>Workshops, demonstrations and awareness campaigns with UAE universities and entrepreneurship and innovation centres.</p></div>
+    <div class="card"><h3>Freemium</h3><p>Free AI advice and roadmaps bring people in. Higher tiers offer sophisticated planning, templates and customised support.</p></div>
+    <div class="card"><h3>Referrals</h3><p>Current users get referral discounts and special premium access for inviting others.</p></div>
+    <div class="card"><h3>Business model</h3><p>Channels: website, social media, universities. Revenue: subscriptions, consultations, institutional access.</p></div>
+  </div>
+</div></section>
+
+<!-- Numbers -->
+<section class="s" id="numbers"><div class="wrap">
+  <header><span class="eyebrow">Capital &amp; funding</span><h2>The numbers behind Foundora</h2>
+  <p class="lead">Foundora needs about AED 45,000 to build the platform, set up digital infrastructure, promote its services and run its first operations. All figures are estimates and may change.</p></header>
+  <div class="grid2">
+    <div class="card">
+      <h3>Initial startup budget</h3>
+      <div class="bars" id="capBars" style="margin-top:1rem"></div>
+    </div>
+    <div class="card">
+      <h3>Monthly operating costs</h3>
+      <div class="bars" id="opBars" style="margin-top:1rem"></div>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:1.4rem">
+    <div class="card calc">
+      <h3>Break-even calculator</h3>
+      <div class="formula">AED 9,000 fixed ÷ AED 45 per subscriber = 200 premium subscribers</div>
+      <p style="margin:0">Each premium subscriber pays AED 59 a month and costs about AED 14 to serve, leaving AED 45. Move the slider to see the monthly result.</p>
+      <label for="subs" style="font-weight:600;color:var(--navy)">Premium subscribers: <span id="subsV" class="num">250</span></label>
+      <input type="range" id="subs" min="0" max="500" step="10" value="250">
+      <div class="out">
+        <div><small>Subscription revenue</small><b id="oRev">AED 14,750</b></div>
+        <div><small>Variable costs (AED 14 each)</small><b id="oVar">AED 3,500</b></div>
+        <div><small>Fixed costs</small><b>AED 9,000</b></div>
+        <div><small>Monthly result</small><b id="oNet">AED 2,250</b></div>
+      </div>
+      <p class="verdict pos" id="verdict">Above break-even.</p>
+      <p class="note">Illustrative only, before taxes and other costs.</p>
+    </div>
+    <div class="card">
+      <h3>Revenue scenarios</h3>
+      <div class="tbl" style="margin-top:1rem"><table>
+        <tr><th>Scenario</th><th class="r">Subscribers</th><th class="r">Monthly revenue</th></tr>
+        <tr><td>Conservative</td><td class="r">100</td><td class="r">AED 5,900</td></tr>
+        <tr><td>Base</td><td class="r">250</td><td class="r">AED 14,750</td></tr>
+        <tr><td>Optimistic</td><td class="r">400</td><td class="r">AED 23,600</td></tr>
+      </table></div>
+      <p class="note" style="margin-top:.8rem">At 250 subscribers, Foundora would have about AED 2,250 a month left after fixed and variable costs. Real profitability depends on customer acquisition, retention, technology costs and demand.</p>
+      <h3 style="margin-top:1.4rem">Sources of funding</h3>
+      <ul class="clean"><li>Founder contributions</li><li>University entrepreneurship programs</li><li>Startup competitions and grants</li><li>Angel investors</li><li>Reinvested premium and professional services revenue</li></ul>
+      <p class="note" style="margin-top:.5rem">UAE entrepreneurship programs offer opportunities, but funding depends on eligibility and the program.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- Success & risks -->
+<section class="s" id="risks"><div class="wrap">
+  <header><span class="eyebrow">Success factors &amp; risks</span><h2>What has to go right, and what could go wrong</h2>
+  <p class="lead">Success depends on quality startup advice, reliable AI-generated information, attracting customers and staying sustainable, plus strong specialist relationships and changes driven by customer feedback.</p></header>
+  <div class="grid2">
+    <div>
+      <h3 style="margin-bottom:.7rem">Key success factors</h3>
+      <div class="tbl"><table>
+        <tr><th>Success factor</th><th>How we measure it</th></tr>
+        <tr><td>Customer acquisition</td><td>Monthly new registrations</td></tr>
+        <tr><td>Customer engagement</td><td>Onboarding completion rate</td></tr>
+        <tr><td>Product usefulness</td><td>Completed roadmap tasks</td></tr>
+        <tr><td>Customer retention</td><td>Repeat usage within 30–90 days</td></tr>
+        <tr><td>Revenue generation</td><td>Premium subscribers</td></tr>
+        <tr><td>Financial sustainability</td><td>Monthly operating margin</td></tr>
+        <tr><td>Customer satisfaction</td><td>User feedback ratings</td></tr>
+        <tr><td>Specialist support</td><td>Consultation response times</td></tr>
+      </table></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:.7rem">Business model</h3>
+      <div class="tbl"><table>
+        <tr><th>Element</th><th>Foundora's model</th></tr>
+        <tr><td>Target customers</td><td>UAE entrepreneurs aged 18–35</td></tr>
+        <tr><td>Value proposition</td><td>Personalised startup guidance</td></tr>
+        <tr><td>Channels</td><td>Website, social media, universities</td></tr>
+        <tr><td>Relationships</td><td>AI assistance and specialist support</td></tr>
+        <tr><td>Revenue streams</td><td>Subscriptions, consultations, institutional access</td></tr>
+        <tr><td>Key resources</td><td>AI technology, platform, specialists</td></tr>
+        <tr><td>Key activities</td><td>Development, marketing, customer support</td></tr>
+        <tr><td>Key partners</td><td>Universities, technology providers, experts</td></tr>
+        <tr><td>Cost structure</td><td>Hosting, AI usage, marketing, operations</td></tr>
+      </table></div>
+    </div>
+  </div>
+  <h3 style="margin:2rem 0 .7rem">Risks and how we handle them</h3>
+  <div class="tbl"><table>
+    <tr><th>Risk</th><th>Potential impact</th><th>Mitigation</th></tr>
+    <tr><td>Strong competition</td><td>Low customer acquisition</td><td>Offer UAE-focused startup tools</td></tr>
+    <tr><td>Low willingness to pay</td><td>Limited revenue</td><td>Test pricing and subscription packages</td></tr>
+    <tr><td>Inaccurate AI information</td><td>Loss of customer trust</td><td>Review content and refer to experts</td></tr>
+    <tr><td>Data security issues</td><td>Legal and reputational damage</td><td>Implement data protection controls</td></tr>
+    <tr><td>High operating costs</td><td>Reduced profitability</td><td>Monitor technology expenses</td></tr>
+    <tr><td>Low customer retention</td><td>Unstable revenue</td><td>Improve features using feedback</td></tr>
+    <tr><td>Limited specialist support</td><td>Delayed consultations</td><td>Develop a reliable expert network</td></tr>
+    <tr><td>Regulatory misunderstandings</td><td>Incorrect business decisions</td><td>Refer users to official UAE authorities</td></tr>
+  </table></div>
+  <div class="card" style="margin-top:1.2rem"><h3>Data protection</h3><p>Foundora will follow the UAE Personal Data Protection Law (Federal Decree-Law No. 45 of 2021): securing personal data, collecting only what is needed and using proper security protocols. Before expanding, Foundora will test willingness to pay, subscription rates and institutional relationships.</p></div>
+</div></section>
+
+<!-- Timeline -->
+<section class="s" id="timeline"><div class="wrap">
+  <header><span class="eyebrow">Project timeline</span><h2>Five-year development plan</h2>
+  <p class="lead">Customer research, platform development and market testing come first. Later years focus on better services, more customers, new partnerships and regional expansion. Each expansion decision depends on customer reviews, platform performance and financial viability.</p></header>
+  <ol class="years">
+    <li><span class="y">Year 1</span><p>Research, prototype testing and MVP launch</p><p class="m">First paying customers</p></li>
+    <li><span class="y">Year 2</span><p>Platform improvements, marketing and university partnerships</p><p class="m">Growing customer base</p></li>
+    <li><span class="y">Year 3</span><p>UAE expansion and Arabic-language features</p><p class="m">Wider market reach</p></li>
+    <li><span class="y">Year 4</span><p>Specialist services and networking features</p><p class="m">Stronger partnerships</p></li>
+    <li><span class="y">Year 5</span><p>GCC market research and platform scaling</p><p class="m">Ready for regional growth</p></li>
+  </ol>
+  <h3 style="margin:2rem 0 .7rem">Year 1 schedule</h3>
+  <div class="tbl"><table>
+    <tr><th>Period</th><th>Main activities</th></tr>
+    <tr><td>Months 1–2</td><td>Customer and competitor research</td></tr>
+    <tr><td>Months 3–4</td><td>Prototype development and testing</td></tr>
+    <tr><td>Months 5–6</td><td>MVP development and content preparation</td></tr>
+    <tr><td>Months 7–8</td><td>Pilot launch and customer recruitment</td></tr>
+    <tr><td>Months 9–10</td><td>Pricing tests and specialist partnerships</td></tr>
+  </table></div>
+</div></section>
+
+<!-- Prototype & tech -->
+<section class="s" id="prototype"><div class="wrap">
+  <header><span class="eyebrow">Prototype &amp; technology</span><h2>How the platform is built</h2>
+  <p class="lead">The prototype is an HTML, CSS and JavaScript interface with three key screens: onboarding, the startup roadmap dashboard and the AI assistant. You can try versions of all three at the top of this page.</p></header>
+  <div class="grid3">
+    <div class="card"><h3>Planned architecture</h3><ul class="clean">
+      <li><b>Front end:</b> HTML, CSS, JavaScript and a modern web framework</li>
+      <li><b>Back end:</b> a secure application server for accounts and business data</li>
+      <li><b>Database:</b> user profiles, project information and progress</li>
+      <li><b>AI:</b> a commercial AI model delivered through an API</li>
+      <li><b>Security:</b> authentication, access controls, encryption, data-retention policies</li>
+      <li><b>Analytics:</b> simple usage tracking</li></ul></div>
+    <div class="card"><h3>Not in the prototype yet</h3><p>A live AI integration, payment system, specialist booking system and production database. These will be designed and tested before commercial rollout. The assistant on this page uses simulated responses.</p>
+      <h3 style="margin-top:1rem">Templates planned</h3><ul class="clean"><li>Business plan and proposal templates</li><li>Market research templates</li><li>Financial worksheets</li><li>Investor pitch preparation</li></ul></div>
+    <div class="card"><h3>Coming next</h3><ul class="clean"><li>Arabic language support</li><li>A more detailed financial calculator</li><li>Downloadable business plans</li><li>Better AI responses</li><li>Booking appointments with specialists</li></ul>
+      <p style="margin-top:.8rem">Usability testing will check whether first-time founders can finish onboarding, understand their roadmap and know what to do next without much help. No customer testing results have been reported yet.</p></div>
+  </div>
+</div></section>
+
+<!-- Team -->
+<section class="s" id="team"><div class="wrap">
+  <header><span class="eyebrow">The team</span><h2>Who's building Foundora</h2>
+  <p class="lead">A participatory team where roles follow personal strengths, with regular task reviews, open feedback and shared decisions. Skill gaps in advanced AI integration, cybersecurity, UAE regulation and expert financial or legal advice will be filled through external technical help, professional consultations, training and partnerships.</p></header>
+  <div class="team">
+    <div class="member"><div class="av">MA</div><b>Malika Adilova</b><small>Group leader · Project manager</small><p>Group coordination, business concept and report integration</p></div>
+    <div class="member"><div class="av">TA</div><b>Taha Adeel</b><small>Product development</small><p>Prototype development and technical research</p></div>
+    <div class="member"><div class="av">JR</div><b>Jamal Ruzakhunov</b><small>Research</small><p>Customer research, segmentation and competitor analysis</p></div>
+    <div class="member"><div class="av">AV</div><b>Alina Valter</b><small>Marketing</small><p>Marketing strategy, customer persuasion and positioning</p></div>
+    <div class="member"><div class="av">Z</div><b>Zhengdali</b><small>Finance · Content &amp; quality</small><p>Financial planning, risk assessment, editing and referencing</p></div>
+  </div>
+</div></section>
+
+<!-- Access -->
+<section class="s" id="access"><div class="wrap">
+  <div class="access">
+    <div>
+      <span class="eyebrow">Open Foundora on any device</span>
+      <h2 style="margin-top:.4rem">Scan the code or visit the link</h2>
+      <p class="lead" style="margin-top:.6rem">You can open this website on your phone, tablet or laptop. There is nothing to install.</p>
+      <ol>
+        <li><b>On a phone:</b> open your camera app, point it at the QR code, and tap the link that appears.</li>
+        <li><b>On a computer:</b> type or paste the web address below into your browser.</li>
+        <li><b>To share it:</b> send the link to a friend, or show them the QR code to scan.</li>
+      </ol>
+      <div class="linkrow">
+        <code id="siteUrl">this page's web address</code>
+        <button class="btn ghost" type="button" id="copy">Copy link</button>
+      </div>
+    </div>
+    <div class="qrbox">
+      <img id="qr" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="QR code that opens the Foundora website">
+      <small>Scan to visit</small>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <p class="tagline">FOUNDORA — FROM IDEA TO IMPACT</p>
+  <details><summary>About this project</summary>
+    <p style="margin-top:.6rem">Business Plan Validation Report, ENT 241 Entrepreneurship, Project 1. Canadian University Dubai (CUD). Submitted 10.11.2026. Prepared by Malika Adilova (2024004762), Taha Adeel (20240005076), Jamal Ruzakhunov (20240005000), Alina Valter (20240005141) and Zhengdali (20240006015).</p>
+    <p style="margin-top:.5rem">Foundora is a proposed business. Customer demand, willingness to pay, platform usefulness and financial feasibility still need to be proven. The AED 45,000 startup cost and 200-subscriber break-even point are estimates to be confirmed.</p>
+    <p style="margin-top:.5rem">AI disclosure: ChatGPT (OpenAI) was used to support development of the business idea, rough writing and drawing while preparing the project.</p>
+  </details>
+  <details><summary>References</summary>
+    <ol class="refs">
+      <li>Lu, J. G., Zhao, G. G., &amp; Zheng, A. M. (2026). Generative AI use in entrepreneurship: An integrative review and the Empowerment–Entrapment Framework. <i>Strategic Entrepreneurship Journal</i>. <a href="https://doi.org/10.1002/sej.70050" target="_blank" rel="noopener">https://doi.org/10.1002/sej.70050</a></li>
+      <li>Mahfoud, N., &amp; El-Adly, M. (2026). AI adoption and sustainable competitive advantage in SMEs: the roles of marketing analytics and innovation. <i>Journal of Entrepreneurship in Emerging Economies, 18</i>(4), 973–991. <a href="https://doi.org/10.1108/jeee-06-2025-0333" target="_blank" rel="noopener">https://doi.org/10.1108/jeee-06-2025-0333</a></li>
+      <li>Meliani, W., &amp; Basti, H. (2024). The contribution of artificial intelligence in enhancing the success and sustainability of startups: practical models. <i>International Journal of Innovative Technologies in Social Science, 4</i>(44). <a href="https://doi.org/10.31435/ijitss.4(44).2024.4539" target="_blank" rel="noopener">https://doi.org/10.31435/ijitss.4(44).2024.4539</a></li>
+      <li>Paust, S., &amp; Korsgaard, S. (2024). Prototyping: a guide for entrepreneurs. <i>SSRN Electronic Journal</i>. <a href="https://doi.org/10.2139/ssrn.4786900" target="_blank" rel="noopener">https://doi.org/10.2139/ssrn.4786900</a></li>
+      <li>Rotaru, G., Dumitru, A., Stanomir, R., &amp; Galani, S. V. (2025). AI chatbots: key benefits and challenges for businesses. <i>Proceedings of the International Conference on Business Excellence, 19</i>(1), 3623–3636. <a href="https://doi.org/10.2478/picbe-2025-0276" target="_blank" rel="noopener">https://doi.org/10.2478/picbe-2025-0276</a></li>
+      <li>Tanika, T., Oikya, U., Awaisheh, S., &amp; Abdelrahman, A. (2026). Exploring the role of AI in social media regulation: a comparative analysis of selected South Asian countries and the actions of major technology platforms. <i>Laws, 15</i>(5), 138. <a href="https://doi.org/10.3390/laws15050138" target="_blank" rel="noopener">https://doi.org/10.3390/laws15050138</a></li>
+    </ol>
+  </details>
+</div></footer>
+
+<script src="vendor/qrcode.js"></script>
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const fmt = n => 'AED ' + Math.round(n).toLocaleString('en-US');
+
+  /* Roadmap */
+  const phases = ['Plan','Validate','Prepare','Launch','Grow'];
+  const tasks = [
+    {t:'Define your customer', d:'Understand who really needs your solution.', ic:'👥', bg:'var(--coral-soft)', s:'complete'},
+    {t:'Interview 5 potential customers', d:'Get real feedback from your target audience.', ic:'💬', bg:'var(--teal-soft)', s:'progress'},
+    {t:'Test your offer', d:'Validate your idea with a simple test.', ic:'🧪', bg:'var(--soft)', s:'pending'},
+    {t:'Estimate startup costs', d:'Plan your budget and resources.', ic:'🧮', bg:'var(--good-soft)', s:'pending'},
+    {t:'Draft your launch plan', d:'Prepare for a successful launch.', ic:'🚀', bg:'var(--coral-soft)', s:'pending'}
+  ];
+  const label = {complete:'✓ Complete', progress:'In progress', pending:'Pending'};
+  const order = ['pending','progress','complete'];
+  function renderRoadmap(){
+    const box = $('#tasks'); box.innerHTML='';
+    tasks.forEach((k,i)=>{
+      const b=document.createElement('button'); b.type='button'; b.className='task';
+      b.innerHTML=`<span class="ic" style="background:${k.bg}" aria-hidden="true">${k.ic}</span><span><b></b><small></small></span><span class="pill ${k.s}">${label[k.s]}</span>`;
+      b.querySelector('b').textContent=k.t; b.querySelector('small').textContent=k.d;
+      b.setAttribute('aria-label', k.t+': '+label[k.s]+'. Tap to change.');
+      b.onclick=()=>{k.s=order[(order.indexOf(k.s)+1)%3]; renderRoadmap();};
+      box.appendChild(b);
+    });
+    const done = tasks.filter(k=>k.s==='complete').length;
+    const reached = Math.min(4, done + (tasks.some(k=>k.s==='progress')?1:0));
+    const st=$('#stepper'); st.querySelectorAll('button').forEach(n=>n.remove());
+    phases.forEach((p,i)=>{
+      const b=document.createElement('button'); b.type='button';
+      b.className = i<reached ? 'done' : (i===reached ? 'cur':'');
+      b.innerHTML = `<span class="dot">${i<reached?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M5 12l5 5L20 7"/></svg>':''}</span>${p}`;
+      b.setAttribute('aria-label', p+(i<reached?' (done)':''));
+      st.appendChild(b);
+    });
+    $('#fill').style.width = (84*Math.max(0,reached)/4)+'%';
+  }
+  renderRoadmap();
+
+  $('#onb').addEventListener('submit', e=>{
+    e.preventDefault();
+    const idea=$('#idea').value.trim()||'Your idea', cust=$('#cust').value.trim()||'your customers', em=$('#emirate').value;
+    $('#rmFor').textContent = `For: ${idea} · ${cust} · ${em} · ${$('#budget').value} AED · ${$('#time').value}`;
+    tasks[0].d = `Understand which ${cust.toLowerCase()} really need ${idea.toLowerCase()}.`;
+    tasks[1].d = `Talk to ${cust.toLowerCase()} in ${em} and get real feedback.`;
+    tasks[3].d = `Plan within your ${$('#budget').value} AED budget.`;
+    tasks[4].d = `Fit your launch into ${$('#time').value.toLowerCase()}.`;
+    tasks.forEach((k,i)=>k.s = i===0?'progress':'pending');
+    renderRoadmap();
+    $('#roadmap').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth', block:'start'});
+  });
+
+  /* Simulated assistant */
+  const replies = [
+    [/cost|budget|money|capital|spend/i, 'Start with a simple budget: product or service setup, licensing, marketing, and a contingency reserve of around 15%. Foundora\'s "Estimate startup costs" task walks you through each line. Next step: list your top five costs and get one real quote for each.'],
+    [/licen|legal|register|permit|free ?zone|law/i, 'Licensing depends on your activity and emirate, and whether you choose mainland or a free zone. I can explain the basics, but please confirm the details with the official UAE authority for your emirate or a qualified advisor before you apply.'],
+    [/pric|charge|how much should/i, 'Look at what customers pay for alternatives today, then test two or three price points with real people. A pre-order or a small pilot is stronger evidence than "I would buy it". Add your result to the Evidence Tracker.'],
+    [/interview|talk|survey|feedback|customer/i, 'Aim for at least 5 interviews with people in your target group. Ask about their last experience with the problem, not whether they like your idea. Note each answer as evidence, separate from your assumptions.'],
+    [/demand|market|compet/i, 'Interest you read about online is a useful signal, but it is still an assumption. Real evidence comes from interviews, pilot sign-ups and actual purchases. Try a simple landing page or pre-order test to measure it.'],
+    [/fund|invest|grant|loan/i, 'Early options include your own savings, university entrepreneurship programs, startup competitions, grants and angel investors. Most programs have eligibility rules, so check them early.']
+  ];
+  const fallback = 'Good question. Break it into one small action you can do this week, and decide what evidence would tell you it worked. A Foundora specialist can help with deeper questions. (This is a demo with simulated answers.)';
+  function add(text, who){
+    const d=document.createElement('div'); d.className='b '+who; d.textContent=text; $('#chat').appendChild(d);
+    $('#chat').scrollTop = $('#chat').scrollHeight;
+  }
+  function ask(q){
+    if(!q) return; add(q,'me');
+    const r = (replies.find(([re])=>re.test(q))||[,fallback])[1];
+    setTimeout(()=>add(r,'ai'), 450);
+  }
+  $('#ask').addEventListener('submit', e=>{e.preventDefault(); const q=$('#q').value.trim(); $('#q').value=''; ask(q);});
+  $('#chips').addEventListener('click', e=>{ if(e.target.tagName==='BUTTON') ask(e.target.textContent); });
+
+  /* Budget bars */
+  function bars(el, rows, total, max, cls){
+    rows.forEach(([n,v])=>{
+      const r=document.createElement('div'); r.className='barrow'+(cls?' '+cls:'');
+      r.innerHTML=`<span></span><span class="t"><i style="width:${(v/max*100).toFixed(1)}%"></i></span><span class="v">${v.toLocaleString('en-US')}</span>`;
+      r.firstChild.textContent=n; el.appendChild(r);
+    });
+    const t=document.createElement('div'); t.className='barrow tot';
+    t.innerHTML=`<span>Total (AED)</span><span></span><span class="v">${total.toLocaleString('en-US')}</span>`; el.appendChild(t);
+  }
+  bars($('#capBars'), [
+    ['Prototype and platform development',12000],['Website, hosting and infrastructure',3000],['AI API setup and initial usage',3000],
+    ['UI/UX design and branding',3500],['Educational content',3000],['Initial marketing and promotion',6000],
+    ['Professional and legal consultations',4000],['Administrative and setup',3000],['Contingency reserve',7500]], 45000, 12000);
+  bars($('#opBars'), [
+    ['Hosting and software',800],['AI API usage',1200],['Marketing',2000],['Technical maintenance',1500],
+    ['Content and administration',1500],['Customer support',1000],['Other operating expenses',1000]], 9000, 2000, 'c');
+
+  /* Break-even */
+  function calc(){
+    const n=+$('#subs').value; $('#subsV').textContent=n;
+    const rev=n*59, v=n*14, net=rev-v-9000;
+    $('#oRev').textContent=fmt(rev); $('#oVar').textContent=fmt(v);
+    $('#oNet').textContent=(net<0?'−':'')+fmt(Math.abs(net));
+    const vd=$('#verdict');
+    vd.className='verdict '+(net>=0?'pos':'neg');
+    vd.textContent = net>0 ? `Above break-even by ${n-200} subscribers.` : net===0 ? 'Exactly at break-even (200 subscribers).' : `${200-n} more subscribers needed to break even.`;
+  }
+  $('#subs').addEventListener('input', calc); calc();
+
+  /* Link + QR for wherever this site is hosted */
+  try{
+    const here = location.origin + location.pathname.replace(/index\.html$/,'');
+    if(location.protocol.startsWith('http')){
+      $('#siteUrl').textContent = here;
+      const q = qrcode(0,'M'); q.addData(here); q.make();
+      $('#qr').src = q.createDataURL(6,4);
+    }
+  }catch(e){}
+
+  /* Copy link */
+  $('#copy').addEventListener('click', ()=>{
+    const url=$('#siteUrl').textContent, btn=$('#copy');
+    const done=()=>{btn.textContent='Copied'; setTimeout(()=>btn.textContent='Copy link',1800);};
+    const sel=()=>{const r=document.createRange(); r.selectNodeContents($('#siteUrl')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent='Selected, press copy';};
+    try{ navigator.clipboard.writeText(url).then(done, sel); }catch(e){ sel(); }
+  });
+})();
+</script>
+
+</body>
+</html>
