@@ -22,9 +22,7 @@
 *{box-sizing:border-box}
 html,body{margin:0}
 html{overflow-x:clip}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;overflow-x:hidden;position:relative;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;padding-bottom:env(safe-area-inset-bottom,0px)}
 h1,h2,h3,h4,b{font-family:var(--display)}
 h1,h2,h3,h4,p{margin:0}
 [hidden]{display:none!important}
@@ -32,41 +30,13 @@ h1,h2,h3,h4,p{margin:0}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 /* background shapes, like the mockup corners */
-.decos{position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+.decos{position:absolute;inset:0;overflow:hidden;z-index:-1;pointer-events:none}
 .deco{position:absolute;z-index:0;pointer-events:none;border-radius:50%}
 .d1{width:420px;height:420px;left:-230px;top:-200px;background:var(--peach);opacity:.55}
 .d2{width:360px;height:360px;left:-250px;top:120px;background:var(--wave);opacity:.55}
 .d3{width:380px;height:380px;right:-230px;bottom:-210px;background:var(--wave);opacity:.5}
 .d4{width:300px;height:300px;left:-160px;bottom:-190px;background:var(--peach);opacity:.6}
-.page{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding-block:2.4rem 1.5rem}
 
-/* hero */
-.hero{text-align:center;position:relative;z-index:0}
-.skyline{position:absolute;right:0;top:-10px;width:min(250px,22%);opacity:.32;z-index:-1}
-.logo{display:inline-flex;align-items:center;gap:.6rem}
-.logo svg{width:70px;height:70px}
-.logo span{font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,7vw,4rem);color:var(--navy);letter-spacing:-.02em}
-.tag{font-family:var(--display);font-weight:700;font-size:clamp(1.25rem,3vw,1.65rem);color:var(--navy);margin-top:.2rem}
-.sub{color:var(--ink);font-size:clamp(1rem,2vw,1.15rem);margin-top:.4rem}
-.rule{width:80px;height:3px;border-radius:3px;background:var(--coral);margin:1rem auto 0}
-@media (max-width:760px){.skyline{display:none}}
-
-/* three windows */
-.panels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem;align-items:start}
-@media (max-width:1000px){.panels{grid-template-columns:minmax(0,1fr);max-width:520px;margin-inline:auto}}
-.win{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 34px -20px rgba(16,38,63,.4);overflow:hidden;scroll-margin-top:16px}
-.bar{display:flex;align-items:center;gap:6px;padding:.55rem .8rem;background:var(--soft);border-bottom:1px solid var(--line)}
-.bar i{width:10px;height:10px;border-radius:50%}
-.bar i:nth-child(1){background:#EE6A5F}.bar i:nth-child(2){background:#F5BE4F}.bar i:nth-child(3){background:#62C554}
-.bar span{margin-inline:auto;font-size:.74rem;color:var(--muted);padding-right:30px}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.1rem;border-bottom:1px solid var(--line)}
-.nav .brand{display:flex;align-items:center;gap:.4rem;font-family:var(--display);font-weight:800;color:var(--navy)}
-.nav .brand svg{width:22px;height:22px}
-.nav .icons{display:flex;align-items:center;gap:.7rem;color:var(--navy)}
-.av{width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font-size:.7rem;font-weight:700;display:grid;place-items:center;font-family:var(--display)}
-.in{padding:1.1rem}
-.win h2{font-size:1.6rem;font-weight:800;color:var(--navy);line-height:1.15}
-.hint{color:var(--muted);font-size:.86rem;margin:.35rem 0 1rem}
 
 /* onboarding */
 form.onb{display:grid;gap:.55rem}
@@ -76,7 +46,7 @@ form.onb{display:grid;gap:.55rem}
 .field input,.field select{width:100%;font:inherit;font-size:.85rem;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:.45rem .6rem}
 .field input::placeholder{color:#98A2AB}
 .field input:focus,.field select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-soft)}
-.btn{display:flex;justify-content:center;align-items:center;gap:.4rem;width:calc(100% - 2.2rem);margin:.5rem 0 0 2.2rem;background:var(--teal);color:var(--on-teal);border:0;border-radius:8px;padding:.75rem;font-family:var(--display);font-weight:600;font-size:1rem;cursor:pointer}
+.btn{display:flex;justify-content:center;align-items:center;gap:.4rem;width:100%;margin:.6rem 0 0;background:var(--teal);color:var(--on-teal);border:0;border-radius:8px;padding:.75rem;font-family:var(--display);font-weight:600;font-size:1rem;cursor:pointer}
 .btn:hover{filter:brightness(1.1)}
 
 /* roadmap */
@@ -104,7 +74,7 @@ form.onb{display:grid;gap:.55rem}
 /* assistant */
 .as-head{display:flex;gap:.7rem;align-items:flex-start}
 .as-head svg{width:34px;height:34px;flex:none;margin-top:.1rem}
-.chat{display:grid;gap:.6rem;max-height:250px;overflow-y:auto;margin-top:.2rem}
+.chat{display:grid;gap:.7rem;max-height:min(40vh,340px);overflow-y:auto;margin-top:.2rem}
 .row{display:flex;gap:.5rem;align-items:flex-start}
 .row.me{justify-content:flex-end}
 .row .who{width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center}
@@ -145,11 +115,67 @@ footer{text-align:center;margin-top:2rem}
 .access b{color:var(--navy);display:block;font-size:.95rem}
 .access code{color:var(--teal);font-size:.82rem;word-break:break-all}
 @media (max-width:460px){.access{flex-direction:column;text-align:center}}
+
+html{scroll-snap-type:y proximity;scroll-padding-top:var(--navh);scroll-behavior:smooth}
+:root{--navh:64px}
+.gut{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+
+/* app bar */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+.appbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.appbar .gut{max-width:1180px;margin:0 auto;height:var(--navh);display:flex;align-items:center;gap:1rem}
+.appbar .brand{display:flex;align-items:center;gap:.45rem;font-family:var(--display);font-weight:800;font-size:1.25rem;color:var(--navy);text-decoration:none}
+.appbar .brand svg{width:28px;height:28px}
+.tabs{margin-left:auto;display:flex;gap:.3rem}
+.tabs a{text-decoration:none;color:var(--muted);font-weight:500;font-size:.9rem;padding:.4rem .8rem;border-radius:999px}
+.tabs a.on{background:var(--teal-soft);color:var(--teal);font-weight:600}
+.appbar .icons{display:flex;align-items:center;gap:.8rem;color:var(--navy)}
+@media (max-width:640px){.tabs a{padding:.35rem .55rem;font-size:.8rem}.appbar .icons .bell{display:none}.appbar .brand span{display:none}}
+
+/* screens */
+.screen{position:relative;isolation:isolate;min-height:calc(100svh - var(--navh));scroll-snap-align:start;display:flex;align-items:center;padding-block:3rem;overflow:hidden}
+.screen+.screen{border-top:1px solid var(--line)}
+.screen>.gut{width:100%;max-width:1180px;margin:0 auto}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 40px -26px rgba(16,38,63,.45);padding:clamp(1.2rem,3vw,2rem)}
+.screen h2{font-family:var(--display);font-size:clamp(1.9rem,4.4vw,2.8rem);font-weight:800;color:var(--navy);line-height:1.1;letter-spacing:-.01em;text-wrap:balance}
+.lead{color:var(--muted);font-size:1.05rem;margin-top:.6rem;max-width:46ch}
+.kicker{font-family:var(--display);font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--coral)}
+.next-link{display:inline-flex;align-items:center;gap:.4rem;margin-top:1.4rem;font-family:var(--display);font-weight:600;color:var(--teal);text-decoration:none}
+.next-link:hover{text-decoration:underline}
+
+/* screen 1 */
+.s1{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(1.5rem,5vw,4.5rem);align-items:center}
+@media (max-width:900px){.s1{grid-template-columns:minmax(0,1fr)}}
+.s1 .logo{display:flex;align-items:center;gap:.6rem;margin-bottom:1.2rem}
+.s1 .logo svg{width:52px;height:52px}
+.s1 .logo span{font-family:var(--display);font-weight:800;font-size:2.2rem;color:var(--navy)}
+.s1 .tagline{font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--navy);margin-top:1.1rem}
+.s1 .rule{width:70px;height:3px;border-radius:3px;background:var(--coral);margin-top:.9rem}
+.features{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem 1rem;margin-top:1.8rem}
+.features div{justify-content:flex-start;padding:0;font-size:.95rem}
+.features div+div{border-left:0}
+.features svg{width:30px;height:30px}
+#start .d2{top:auto;bottom:-220px;left:-200px}
+@media (max-width:900px){.deco{opacity:.28!important}}
+.skyline{position:absolute;right:2%;bottom:0;width:min(380px,40%);opacity:.22;z-index:-1}
+
+/* screen 2 */
+.s2{max-width:760px;margin:0 auto}
+.s2 .card{margin-top:1.6rem}
+.stepper{margin-bottom:1.4rem}
+.task{padding:.8rem .9rem}
+.task b{font-size:.98rem}.task small{font-size:.84rem}
+
+/* screen 3 */
+.s3{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:1.4rem;align-items:start;margin-top:1.6rem}
+@media (max-width:900px){.s3{grid-template-columns:minmax(0,1fr)}}
+.s3 .side .evid{margin-top:0}
+.b{font-size:.9rem}
+
+footer{text-align:center;padding-block:2.2rem 2.6rem;border-top:1px solid var(--line)}
 </style>
 </head>
 <body>
-<div class="decos" aria-hidden="true"><span class="deco d1"></span><span class="deco d2"></span><span class="deco d3"></span><span class="deco d4"></span></div>
-
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="mark" viewBox="0 0 100 100">
@@ -164,8 +190,22 @@ footer{text-align:center;margin-top:2rem}
   </defs>
 </svg>
 
-<main class="page">
-  <header class="hero">
+<header class="appbar">
+  <div class="gut">
+    <a class="brand" href="#start"><svg aria-hidden="true"><use href="#mark"/></svg><span>Foundora</span></a>
+    <nav class="tabs" aria-label="Screens">
+      <a href="#start" class="on">Start</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#assistant">Assistant</a>
+    </nav>
+    <span class="icons"><svg class="bell" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="av">JD</span></span>
+  </div>
+</header>
+
+<main>
+  <!-- Screen 1: onboarding -->
+  <section class="screen" id="start" aria-labelledby="t1">
+    <div class="decos" aria-hidden="true"><span class="deco d1"></span><span class="deco d2"></span></div>
     <svg class="skyline" viewBox="0 0 320 150" aria-hidden="true"><g fill="#7FB5B5">
       <rect x="6" y="104" width="16" height="46"/><rect x="26" y="86" width="14" height="64"/><rect x="44" y="110" width="20" height="40"/>
       <rect x="70" y="72" width="15" height="78"/><rect x="90" y="94" width="18" height="56"/><rect x="112" y="80" width="12" height="70"/>
@@ -173,21 +213,22 @@ footer{text-align:center;margin-top:2rem}
       <rect x="174" y="84" width="15" height="66"/><rect x="194" y="60" width="14" height="90"/><rect x="212" y="98" width="22" height="52"/>
       <path d="M240 150 L240 72 Q252 46 264 72 L264 150 Z"/><rect x="270" y="104" width="18" height="46"/><rect x="292" y="90" width="16" height="60"/>
     </g></svg>
-    <div class="logo"><svg aria-hidden="true"><use href="#mark"/></svg><span>Foundora</span></div>
-    <h1 class="tag">Plan. Validate. Launch.</h1>
-    <p class="sub">Your AI-powered companion for turning ideas into successful startups in the UAE.</p>
-    <div class="rule"></div>
-  </header>
-
-  <div class="panels">
-    <!-- Onboarding -->
-    <section class="win" aria-labelledby="h1">
-      <div class="bar"><i></i><i></i><i></i><span>🔒 foundora.ae</span></div>
-      <div class="nav"><span class="brand"><svg aria-hidden="true"><use href="#mark"/></svg>Foundora</span>
-        <span class="icons"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span></div>
-      <div class="in">
-        <h2 id="h1">Turn your idea into a clear next step</h2>
-        <p class="hint">Answer a few quick questions to get your personalized startup roadmap.</p>
+    <div class="gut s1">
+      <div>
+        <div class="logo"><svg aria-hidden="true"><use href="#mark"/></svg><span>Foundora</span></div>
+        <h2 id="t1">Turn your idea into a clear next step</h2>
+        <p class="lead">Your AI-powered companion for turning ideas into successful startups in the UAE. Answer a few quick questions to get your personalized startup roadmap.</p>
+        <p class="tagline">Plan. Validate. Launch.</p>
+        <div class="rule"></div>
+        <div class="features">
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="#10263F" stroke-width="1.5" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>AI-Powered Guidance</div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="#10263F" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5z"/></svg>Personalized Roadmap</div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="#10263F" stroke-width="1.5" aria-hidden="true"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/><path d="M5 9h4M5 12h4M15 9h4M15 12h4"/></svg>Expert Resources &amp; Learning</div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="#10263F" stroke-width="1.5" aria-hidden="true"><path d="M3 21h18M6 21v-6M10 21v-9M14 21v-6M18 21V9M4 12l5-5 4 3 7-6"/></svg>Validation Tools &amp; Insights</div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="#10263F" stroke-width="1.5" aria-hidden="true"><path d="M12 15l-3-3a22 22 0 0 1 2-4A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2z"/><path d="M9 12H4s.5-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.5 4-2c1.1-1.6 0-5 0-5M5 15c-1.5 1.3-2 5-2 5s3.7-.5 5-2"/></svg>Launch with Confidence</div>
+  </div>
+      </div>
+      <div class="card">
         <form class="onb" id="onb">
           <div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg>
             <div><label for="idea">Your business idea</label><input id="idea" placeholder="e.g. A sustainable fashion brand..."></div></div>
@@ -202,63 +243,62 @@ footer{text-align:center;margin-top:2rem}
           <button class="btn" type="submit">Get Started →</button>
         </form>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Roadmap -->
-    <section class="win" id="roadmap" aria-labelledby="h2">
-      <div class="bar"><i></i><i></i><i></i><span>🔒 foundora.ae/dashboard</span></div>
-      <div class="nav"><span class="brand"><svg aria-hidden="true"><use href="#mark"/></svg>Foundora</span>
-        <span class="icons"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="av">JD</span></span></div>
-      <div class="in">
-        <h2 id="h2">Your startup roadmap</h2>
-        <p class="hint" id="rmSub">A personalised plan to validate and grow your idea.</p>
+  <!-- Screen 2: roadmap -->
+  <section class="screen" id="roadmap" aria-labelledby="t2">
+    <div class="decos" aria-hidden="true"><span class="deco d3"></span></div>
+    <div class="gut"><div class="s2">
+      <span class="kicker">Your dashboard</span>
+      <h2 id="t2" style="margin-top:.4rem">Your startup roadmap</h2>
+      <p class="lead" id="rmSub">A personalised plan to validate and grow your idea.</p>
+      <div class="card">
         <div class="stepper" id="stepper"><span class="fill" id="fill"></span></div>
         <div class="tasks" id="tasks"></div>
       </div>
-    </section>
+      <a class="next-link" href="#assistant">Stuck on a step? Ask the assistant ↓</a>
+    </div></div>
+  </section>
 
-    <!-- Assistant -->
-    <section class="win" aria-labelledby="h3">
-      <div class="bar"><i></i><i></i><i></i><span>🔒 foundora.ae/assistant</span></div>
-      <div class="nav"><span class="brand"><svg aria-hidden="true"><use href="#mark"/></svg>Foundora</span>
-        <span class="icons"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span></div>
-      <div class="in">
-        <div class="as-head"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.6 8.4L23 12l-8.4 2.6L12 23l-2.6-8.4L1 12l8.4-2.6z" fill="#1C6670"/></svg>
-          <div><h2 id="h3">Let's validate your idea</h2><p class="hint" style="margin-bottom:.7rem">Ask questions, explore insights and get actionable advice.</p></div></div>
-        <div class="chat" id="chat" aria-live="polite">
+  <!-- Screen 3: assistant -->
+  <section class="screen" id="assistant" aria-labelledby="t3">
+    <div class="decos" aria-hidden="true"><span class="deco d4"></span><span class="deco d3"></span></div>
+    <div class="gut">
+      <div class="as-head"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.6 8.4L23 12l-8.4 2.6L12 23l-2.6-8.4L1 12l8.4-2.6z" fill="#1C6670"/></svg>
+        <div><h2 id="t3">Let's validate your idea</h2><p class="lead" style="margin-top:.3rem">Ask questions, explore insights and get actionable advice.</p></div></div>
+      <div class="s3">
+        <div class="card">
+          <div class="chat" id="chat" aria-live="polite">
           <div class="row me"><div class="b">Is there demand for a sustainable fashion brand in the UAE?</div><span class="who"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg></span></div>
           <div class="row ai"><span class="who"><svg aria-hidden="true"><use href="#mark"/></svg></span><div class="b">Great question! Based on recent market trends, sustainable fashion is growing in the UAE, especially among Gen Z and millennials. Would you like to see some data and next steps?</div></div>
         </div>
-        <div class="evid">
-          <h4>Evidence Tracker</h4>
-          <div class="cols"><div><strong>Assumption</strong><span id="evA">High demand for sustainable fashion</span></div><div><strong>Customer Evidence</strong><span id="evB">Growing interest in eco-friendly brands in the UAE</span></div></div>
-        </div>
-        <div class="next"><span class="ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span>
-          <div><b>Next Step Recommendation:</b>Interview at least 5 potential customers to validate your product concept.</div></div>
         <form class="ask" id="ask">
           <input id="q" aria-label="Ask a follow-up question" placeholder="Ask a follow-up question..." autocomplete="off">
           <button type="submit" aria-label="Send"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
         </form>
+        </div>
+        <div class="side">
+          <div class="evid card" style="padding:0">
+            <h4>Evidence Tracker</h4>
+            <div class="cols"><div><strong>Assumption</strong><span id="evA">High demand for sustainable fashion</span></div><div><strong>Customer Evidence</strong><span id="evB">Growing interest in eco-friendly brands in the UAE</span></div></div>
+          </div>
+          <div class="next"><span class="ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span>
+            <div><b>Next Step Recommendation:</b>Interview at least 5 potential customers to validate your product concept.</div></div>
+          <a class="next-link" href="#roadmap">↑ Back to my roadmap</a>
+        </div>
       </div>
-    </section>
-  </div>
-
-  <div class="features">
-    <div><svg viewBox="0 0 24 24" fill="none" stroke="#10263F" stroke-width="1.5" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>AI-Powered Guidance</div>
-    <div><svg viewBox="0 0 24 24" fill="none" stroke="#10263F" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5z"/></svg>Personalized Roadmap</div>
-    <div><svg viewBox="0 0 24 24" fill="none" stroke="#10263F" stroke-width="1.5" aria-hidden="true"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/><path d="M5 9h4M5 12h4M15 9h4M15 12h4"/></svg>Expert Resources &amp; Learning</div>
-    <div><svg viewBox="0 0 24 24" fill="none" stroke="#10263F" stroke-width="1.5" aria-hidden="true"><path d="M3 21h18M6 21v-6M10 21v-9M14 21v-6M18 21V9M4 12l5-5 4 3 7-6"/></svg>Validation Tools &amp; Insights</div>
-    <div><svg viewBox="0 0 24 24" fill="none" stroke="#10263F" stroke-width="1.5" aria-hidden="true"><path d="M12 15l-3-3a22 22 0 0 1 2-4A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2z"/><path d="M9 12H4s.5-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.5 4-2c1.1-1.6 0-5 0-5M5 15c-1.5 1.3-2 5-2 5s3.7-.5 5-2"/></svg>Launch with Confidence</div>
-  </div>
-
-  <footer>
-    <p class="motto">FOUNDORA — FROM IDEA TO IMPACT</p>
-    <div class="access" id="access" hidden>
-      <img id="qr" alt="QR code for this website">
-      <div><b>Scan or visit to open on your phone</b><p>Point your phone camera at the code, or go to</p><code id="siteUrl"></code></div>
     </div>
-  </footer>
+  </section>
 </main>
+
+<footer class="gut">
+  <p class="motto">FOUNDORA — FROM IDEA TO IMPACT</p>
+  <div class="access" id="access" hidden>
+    <img id="qr" alt="QR code for this website">
+    <div><b>Scan or visit to open on your phone</b><p>Point your phone camera at the code, or go to</p><code id="siteUrl"></code></div>
+  </div>
+</footer>
 
 <script src="vendor/qrcode.js"></script>
 <script>
@@ -348,6 +388,15 @@ footer{text-align:center;margin-top:2rem}
     var hit = replies.filter(function(r){ return r[0].test(q); })[0];
     setTimeout(function(){ add(hit ? hit[1] : fallback, 'ai'); }, 450);
   });
+
+  /* highlight the current screen in the app bar */
+  try {
+    var tabs = document.querySelectorAll('.tabs a');
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ tabs.forEach(function(t){ t.classList.toggle('on', t.getAttribute('href') === '#'+en.target.id); }); } });
+    }, {rootMargin:'-45% 0px -45% 0px'});
+    document.querySelectorAll('.screen').forEach(function(s){ io.observe(s); });
+  } catch(e) {}
 
   /* link + QR built from wherever the site is hosted */
   try {
