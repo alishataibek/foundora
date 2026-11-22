@@ -109,7 +109,6 @@ form.ask button{width:40px;flex:none;border:0;border-radius:8px;background:var(-
 /* footer */
 footer{text-align:center;margin-top:2rem}
 .motto{font-family:var(--display);font-weight:600;letter-spacing:.38em;color:var(--navy);font-size:.88rem}
-@media (max-width:460px){
 html{scroll-snap-type:y proximity;scroll-padding-top:var(--navh);scroll-behavior:smooth}
 :root{--navh:64px}
 .gut{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
@@ -166,6 +165,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .s3 .side .evid{margin-top:0}
 .b{font-size:.9rem}
 
+.try{font-size:.78rem;color:var(--muted);margin:.8rem 0 .4rem;font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.chips button{font:inherit;font-size:.8rem;color:var(--teal);background:var(--teal-soft);border:1px solid transparent;border-radius:999px;padding:.35rem .8rem;cursor:pointer}
+.chips button:hover{border-color:var(--teal)}
 footer{text-align:center;padding-block:2.2rem 2.6rem;border-top:1px solid var(--line)}
 </style>
 </head>
@@ -271,6 +274,14 @@ footer{text-align:center;padding-block:2.2rem 2.6rem;border-top:1px solid var(--
           <input id="q" aria-label="Ask a follow-up question" placeholder="Ask a follow-up question..." autocomplete="off">
           <button type="submit" aria-label="Send"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
         </form>
+          <p class="try">Try asking:</p>
+          <div class="chips" id="chips">
+            <button type="button">How much will it cost to start?</button>
+            <button type="button">Do I need a trade licence?</button>
+            <button type="button">How should I price my product?</button>
+            <button type="button">How do I interview customers?</button>
+            <button type="button">Yes, show me the next steps</button>
+          </div>
         </div>
         <div class="side">
           <div class="evid card" style="padding:0">
@@ -371,6 +382,10 @@ footer{text-align:center;padding-block:2.2rem 2.6rem;border-top:1px solid var(--
     else { r.insertAdjacentHTML('afterbegin', AI); r.appendChild(b); }
     $('#chat').appendChild(r); $('#chat').scrollTop = $('#chat').scrollHeight;
   }
+  $('#chips').addEventListener('click', function(e){
+    var btn = e.target.closest('button'); if(!btn) return;
+    var q = $('#q'); q.value = btn.textContent; q.focus();
+  });
   $('#ask').addEventListener('submit', function(e){
     e.preventDefault(); var q = $('#q').value.trim(); if(!q) return; $('#q').value = '';
     add(q, 'me');
