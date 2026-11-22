@@ -106,16 +106,10 @@ form.ask button{width:40px;flex:none;border:0;border-radius:8px;background:var(-
 .features svg{width:38px;height:38px;flex:none}
 @media (max-width:900px){.features{grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem}.features div+div{border-left:0}.features div{justify-content:flex-start}}
 
-/* footer + access */
+/* footer */
 footer{text-align:center;margin-top:2rem}
 .motto{font-family:var(--display);font-weight:600;letter-spacing:.38em;color:var(--navy);font-size:.88rem}
-.access{display:inline-flex;align-items:center;gap:1rem;margin-top:1.4rem;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.7rem 1rem .7rem .7rem;text-align:left;max-width:100%}
-.access img{width:92px;height:92px;image-rendering:pixelated;flex:none;border-radius:6px}
-.access p{font-size:.85rem;color:var(--muted)}
-.access b{color:var(--navy);display:block;font-size:.95rem}
-.access code{color:var(--teal);font-size:.82rem;word-break:break-all}
-@media (max-width:460px){.access{flex-direction:column;text-align:center}}
-
+@media (max-width:460px){
 html{scroll-snap-type:y proximity;scroll-padding-top:var(--navh);scroll-behavior:smooth}
 :root{--navh:64px}
 .gut{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
@@ -294,13 +288,8 @@ footer{text-align:center;padding-block:2.2rem 2.6rem;border-top:1px solid var(--
 
 <footer class="gut">
   <p class="motto">FOUNDORA — FROM IDEA TO IMPACT</p>
-  <div class="access" id="access" hidden>
-    <img id="qr" alt="QR code for this website">
-    <div><b>Scan or visit to open on your phone</b><p>Point your phone camera at the code, or go to</p><code id="siteUrl"></code></div>
-  </div>
 </footer>
 
-<script src="vendor/qrcode.js"></script>
 <script>
 (function(){
   var $ = function(s){ return document.querySelector(s); };
@@ -398,16 +387,6 @@ footer{text-align:center;padding-block:2.2rem 2.6rem;border-top:1px solid var(--
     document.querySelectorAll('.screen').forEach(function(s){ io.observe(s); });
   } catch(e) {}
 
-  /* link + QR built from wherever the site is hosted */
-  try {
-    if (location.protocol.indexOf('http') === 0 && window.qrcode) {
-      var here = location.origin + location.pathname.replace(/index\.html$/, '');
-      var q = qrcode(0, 'M'); q.addData(here); q.make();
-      $('#qr').src = q.createDataURL(4, 2);
-      $('#siteUrl').textContent = here.replace(/^https?:\/\//, '').replace(/\/$/, '');
-      $('#access').hidden = false;
-    }
-  } catch (e) {}
 })();
 </script>
 </body>
